@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Controle de Produtos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="['/gerenciar-produtos']">Gerenciar Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/alterar-senha']">Minha Conta</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4>Usuário Autenticado</h4>
+      <div>Nome do usuário: <strong>{{dadosUsuario.nome | uppercase}}</strong></div>
+      <div>Email: <strong>{{dadosUsuario.email | lowercase}}</strong></div>
+
+      <div class="mt-2">
+        <button class="btn btn-secondary btn-sm" (click)="logout()">
+          Sair da Conta
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4>Alterar senha de acesso</h4>
+      <p class="mb-2">Preencha o formulário para alterar sua senha de acesso ao sistema</p>
+
+      <div class="mb-2 text-success">
+        <strong>{{mensagem_sucesso}}</strong>
+      </div>
+
+      <div class="mb-2 text-danger">
+        <strong>{{mensagem_erro}}</strong>
+      </div>
+
+      <form [formGroup]="formAlterarSenha" (ngSubmit)="onSubmit()">
+
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <label>Senha atual:</label>
+            <input type="password" class="form-control" formControlName="senhaAtual" />
+            <div class="text-danger">
+              <span *ngIf="form.senhaAtual.touched && form.senhaAtual.invalid">
+                <span *ngIf="form.senhaAtual.errors.required">
+                  Por favor, informe a senha atual.
+                </span>
+                <span *ngIf="form.senhaAtual.errors.minlength">
+                  Por favor, informe no mínimo 8 caracteres.
+                </span>
+                <span *ngIf="form.senhaAtual.errors.maxlength">
+                  Por favor, informe no máximo 20 caracteres.
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label>Nova senha:</label>
+            <input type="password" class="form-control" formControlName="novaSenha" />
+            <div class="text-danger">
+              <span *ngIf="form.novaSenha.touched && form.novaSenha.invalid">
+                <span *ngIf="form.novaSenha.errors.required">
+                  Por favor, informe a nova senha.
+                </span>
+                <span *ngIf="form.novaSenha.errors.minlength">
+                  Por favor, informe no mínimo 8 caracteres.
+                </span>
+                <span *ngIf="form.novaSenha.errors.maxlength">
+                  Por favor, informe no máximo 20 caracteres.
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label>Confirme a nova senha:</label>
+            <input type="password" class="form-control" formControlName="novaSenhaConfirmacao" />
+            <div class="text-danger">
+              <span *ngIf="form.novaSenhaConfirmacao.touched && form.novaSenhaConfirmacao.invalid">
+                <span *ngIf="form.novaSenhaConfirmacao.errors.required">
+                  Por favor, confirme a nova senha.
+                </span>
+                <span *ngIf="form.novaSenhaConfirmacao.errors.minlength">
+                  Por favor, informe no mínimo 8 caracteres.
+                </span>
+                <span *ngIf="form.novaSenhaConfirmacao.errors.maxlength">
+                  Por favor, informe no máximo 20 caracteres.
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <input type="submit" class="btn btn-primary" value="Alterar Senha" />
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

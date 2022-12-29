@@ -1,0 +1,50 @@
+<div class="row mt-5">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h2><strong>Controle de Produtos</strong></h2>
+                    <h3>Recuperar Senha</h3>
+                    <hr />
+                </div>
+
+                <div class="text-center mb-2 text-success">
+                    <strong>{{mensagem_sucesso}}</strong>
+                </div>
+
+                <div class="text-center mb-2 text-danger">
+                    <strong>{{mensagem_erro}}</strong>
+                </div>
+
+                <form [formGroup]="formRecuperarSenha" (ngSubmit)="onSubmit()">
+
+                    <div class="mb-2">
+                        <label>Email de acesso:</label>
+                        <input type="text" class="form-control" formControlName="email" />
+                        <div class="text-danger">
+                            <span *ngIf="form.email.touched && form.email.invalid">
+                                <span *ngIf="form.email.errors.required">
+                                    Por favor, informe o email do usuário.
+                                </span>
+                                <span *ngIf="form.email.errors.email">
+                                    Por favor, informe um endereço de email válido.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" value="Recuperar Senha" />
+                        </div>
+                        <div class="d-grid mt-2">
+                            <a [routerLink]="['/acessar-conta']" class="btn btn-light">
+                                Já possui conta? <strong>Acesse aqui!</strong>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

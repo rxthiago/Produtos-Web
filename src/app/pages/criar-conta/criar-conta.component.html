@@ -1,0 +1,101 @@
+<div class="row mt-5">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h2><strong>Controle de Produtos</strong></h2>
+                    <h3>Criar Conta</h3>
+                    <hr/>
+                </div>
+
+                <div class="text-center mb-2 text-success">
+                    <strong>{{mensagem_sucesso}}</strong>
+                </div>
+
+                <div class="text-center mb-2 text-danger">
+                    <strong>{{mensagem_erro}}</strong>
+                </div>
+
+                <form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+
+                    <div class="mb-2">
+                        <label>Nome do usuário:</label>
+                        <input type="text" class="form-control" formControlName="nome"/>
+                        <div class="text-danger">
+                            <span *ngIf="form.nome.touched && form.nome.invalid">
+                                <span *ngIf="form.nome.errors.required">
+                                    Por favor, informe o nome do usuário.
+                                </span>
+                                <span *ngIf="form.nome.errors.minlength">
+                                    Por favor, informe no mínimo 8 caracteres.
+                                </span>
+                                <span *ngIf="form.nome.errors.maxlength">
+                                    Por favor, informe no máximo 150 caracteres.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Email de acesso:</label>
+                        <input type="text" class="form-control" formControlName="email"/>
+                        <div class="text-danger">
+                            <span *ngIf="form.email.touched && form.email.invalid">
+                                <span *ngIf="form.email.errors.required">
+                                    Por favor, informe o email do usuário.
+                                </span>
+                                <span *ngIf="form.email.errors.email">
+                                    Por favor, informe um endereço de email válido.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Senha de acesso:</label>
+                        <input type="password" class="form-control" formControlName="senha"/>
+                        <div class="text-danger">
+                            <span *ngIf="form.senha.touched && form.senha.invalid">
+                                <span *ngIf="form.senha.errors.required">
+                                    Por favor, informe a senha do usuário.
+                                </span>
+                                <span *ngIf="form.senha.errors.minlength">
+                                    Por favor, informe no mínimo 8 caracteres.
+                                </span>
+                                <span *ngIf="form.senha.errors.maxlength">
+                                    Por favor, informe no máximo 20 caracteres.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Confirme a senha:</label>
+                        <input type="password" class="form-control" formControlName="senhaConfirmacao"/>
+                        <div class="text-danger">
+                            <span *ngIf="form.senhaConfirmacao.touched && form.senhaConfirmacao.invalid">
+                                <span *ngIf="form.senhaConfirmacao.errors.required">
+                                    Por favor, informe a senha do usuário.
+                                </span>
+                                <span *ngIf="form.senhaConfirmacao.errors.minlength">
+                                    Por favor, informe no mínimo 8 caracteres.
+                                </span>
+                                <span *ngIf="form.senhaConfirmacao.errors.maxlength">
+                                    Por favor, informe no máximo 20 caracteres.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" value="Realizar Cadastro"/>
+                        </div>
+                        <div class="d-grid mt-2">
+                            <a [routerLink]="['/acessar-conta']" class="btn btn-light">
+                                Já possui conta? <strong>Acesse aqui!</strong>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

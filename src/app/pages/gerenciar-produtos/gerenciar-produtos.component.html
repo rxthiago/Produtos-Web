@@ -1,0 +1,250 @@
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Controle de Produtos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="['/gerenciar-produtos']">Gerenciar Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/alterar-senha']">Minha Conta</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+
+  <h4>Gereciamento de produtos</h4>
+  <p>Cadastre, consulta, edite e exclua produtos.</p>
+  <hr />
+
+  <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#modal_cadastro">
+    Cadastrar Produto
+  </button>
+
+  <div class="mb-2 text-success">
+    <strong>{{mensagem_sucesso_exclusao}}</strong>
+  </div>
+
+  <div class="mb-2 text-danger">
+    <strong>{{mensagem_erro_exclusao}}</strong>
+  </div>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>Nome do produto</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Total</th>
+        <th>Categoria</th>
+        <th>Operações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of dados_produtos">
+        <td>{{p.nome | uppercase}}</td>
+        <td>{{p.preco | currency : 'R$ '}}</td>
+        <td>{{p.quantidade}}</td>
+        <td>{{p.total | currency : 'R$ '}}</td>
+        <td>{{p.categoria.nome | uppercase}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="obterProduto(p.idProduto)" data-bs-toggle="modal"
+            data-bs-target="#modal_edicao">
+            Alterar
+          </button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" (click)="excluirProduto(p.idProduto)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6">Quantidade de produtos: {{dados_produtos.length}}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+</div>
+
+<!-- janela para cadastro de produtos -->
+<div class="modal fade" id="modal_cadastro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Produtos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-2 text-success">
+          <strong>{{mensagem_sucesso_cadastro}}</strong>
+        </div>
+
+        <div class="mb-2 text-danger">
+          <strong>{{mensagem_erro_cadastro}}</strong>
+        </div>
+
+        <form [formGroup]="formCadastrarProduto" (ngSubmit)="cadastrarProduto()">
+
+          <div class="mb-2">
+            <label>Nome do produto:</label>
+            <input type="text" class="form-control" formControlName="nome" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.nome.touched && formCadastro.nome.invalid">
+                <span *ngIf="formCadastro.nome.errors.required">
+                  Por favor, informe o nome do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Preço do produto:</label>
+            <input type="text" class="form-control" formControlName="preco" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.preco.touched && formCadastro.preco.invalid">
+                <span *ngIf="formCadastro.preco.errors.required">
+                  Por favor, informe o preço do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Quantidade:</label>
+            <input type="text" class="form-control" formControlName="quantidade" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.quantidade.touched && formCadastro.quantidade.invalid">
+                <span *ngIf="formCadastro.quantidade.errors.required">
+                  Por favor, informe a quantidade do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Categoria do Produto:</label>
+            <select class="form-select" formControlName="idCategoria">
+              <option value="">Escolha uma opção</option>
+              <option value="{{c.idCategoria}}" *ngFor="let c of dados_categorias">
+                {{c.nome | uppercase}}
+              </option>
+            </select>
+            <div class="text-danger">
+              <span *ngIf="formCadastro.idCategoria.touched && formCadastro.idCategoria.invalid">
+                <span *ngIf="formCadastro.idCategoria.errors.required">
+                  Por favor, selecione a categoria do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="d-grid">
+              <input type="submit" value="Realizar Cadastro" class="btn btn-success" />
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- janela para edição de produtos -->
+<div class="modal fade" id="modal_edicao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de Produto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-2 text-success">
+          <strong>{{mensagem_sucesso_edicao}}</strong>
+        </div>
+
+        <div class="mb-2 text-danger">
+          <strong>{{mensagem_erro_edicao}}</strong>
+        </div>
+
+        <form [formGroup]="formAlterarProduto" (ngSubmit)="atualizarProduto()">
+
+          <input type="hidden" formControlName="idProduto" />
+
+          <div class="mb-2">
+            <label>Nome do produto:</label>
+            <input type="text" class="form-control" formControlName="nome" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.nome.touched && formCadastro.nome.invalid">
+                <span *ngIf="formCadastro.nome.errors.required">
+                  Por favor, informe o nome do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Preço do produto:</label>
+            <input type="text" class="form-control" formControlName="preco" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.preco.touched && formCadastro.preco.invalid">
+                <span *ngIf="formCadastro.preco.errors.required">
+                  Por favor, informe o preço do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Quantidade:</label>
+            <input type="text" class="form-control" formControlName="quantidade" />
+            <div class="text-danger">
+              <span *ngIf="formCadastro.quantidade.touched && formCadastro.quantidade.invalid">
+                <span *ngIf="formCadastro.quantidade.errors.required">
+                  Por favor, informe a quantidade do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Categoria do Produto:</label>
+            <select class="form-select" formControlName="idCategoria">
+              <option value="">Escolha uma opção</option>
+              <option value="{{c.idCategoria}}" *ngFor="let c of dados_categorias">
+                {{c.nome | uppercase}}
+              </option>
+            </select>
+            <div class="text-danger">
+              <span *ngIf="formCadastro.idCategoria.touched && formCadastro.idCategoria.invalid">
+                <span *ngIf="formCadastro.idCategoria.errors.required">
+                  Por favor, selecione a categoria do produto.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="d-grid">
+              <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
