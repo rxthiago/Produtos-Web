@@ -5,7 +5,7 @@
                 <div class="text-center">
                     <h2><strong>Controle de Produtos</strong></h2>
                     <h3>Criar Conta</h3>
-                    <hr/>
+                    <hr />
                 </div>
 
                 <div class="text-center mb-2 text-success">
@@ -20,7 +20,7 @@
 
                     <div class="mb-2">
                         <label>Nome do usuário:</label>
-                        <input type="text" class="form-control" formControlName="nome"/>
+                        <input type="text" class="form-control" formControlName="nome" />
                         <div class="text-danger">
                             <span *ngIf="form.nome.touched && form.nome.invalid">
                                 <span *ngIf="form.nome.errors.required">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-2">
                         <label>Email de acesso:</label>
-                        <input type="text" class="form-control" formControlName="email"/>
+                        <input type="text" class="form-control" formControlName="email" />
                         <div class="text-danger">
                             <span *ngIf="form.email.touched && form.email.invalid">
                                 <span *ngIf="form.email.errors.required">
@@ -51,7 +51,7 @@
                     </div>
                     <div class="mb-2">
                         <label>Senha de acesso:</label>
-                        <input type="password" class="form-control" formControlName="senha"/>
+                        <input type="password" class="form-control" formControlName="senha" />
                         <div class="text-danger">
                             <span *ngIf="form.senha.touched && form.senha.invalid">
                                 <span *ngIf="form.senha.errors.required">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="mb-2">
                         <label>Confirme a senha:</label>
-                        <input type="password" class="form-control" formControlName="senhaConfirmacao"/>
+                        <input type="password" class="form-control" formControlName="senhaConfirmacao" />
                         <div class="text-danger">
                             <span *ngIf="form.senhaConfirmacao.touched && form.senhaConfirmacao.invalid">
                                 <span *ngIf="form.senhaConfirmacao.errors.required">
@@ -85,7 +85,8 @@
                     </div>
                     <div class="mb-2">
                         <div class="d-grid">
-                            <input type="submit" class="btn btn-primary" value="Realizar Cadastro"/>
+                            <input type="submit" class="btn btn-primary" value="Realizar Cadastro"
+                                [disabled]="!formCadastro.valid" />
                         </div>
                         <div class="d-grid mt-2">
                             <a [routerLink]="['/acessar-conta']" class="btn btn-light">

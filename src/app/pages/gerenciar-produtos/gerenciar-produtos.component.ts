@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-gerenciar-produtos',
@@ -26,7 +27,8 @@ export class GerenciarProdutosComponent implements OnInit {
 
   //construtor
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private spinnerService: NgxSpinnerService
   ) {
 
   }
@@ -37,6 +39,8 @@ export class GerenciarProdutosComponent implements OnInit {
     this.httpHeaders = new HttpHeaders({
       'Authorization': 'Bearer ' + json.token
     });
+
+    this.spinnerService.show();
 
     this.httpClient.get(
       environment.apiProdutos + 'api/categorias',
@@ -49,7 +53,11 @@ export class GerenciarProdutosComponent implements OnInit {
         error: (e) => {
           console.log(e.error);
         }
-      });
+      }).add(
+        () => this.spinnerService.hide()
+      );
+
+    this.spinnerService.show();
 
     this.httpClient.get(
       environment.apiProdutos + 'api/produtos',
@@ -62,7 +70,9 @@ export class GerenciarProdutosComponent implements OnInit {
         error: (e) => {
           console.log(e.error);
         }
-      });
+      }).add(
+        () => this.spinnerService.hide()
+      );
   }
 
   formCadastrarProduto = new FormGroup({
@@ -90,6 +100,8 @@ export class GerenciarProdutosComponent implements OnInit {
 
   cadastrarProduto(): void {
 
+    this.spinnerService.show();
+
     //limpando as mensagens
     this.mensagem_sucesso_cadastro = '';
     this.mensagem_erro_cadastro = '';
@@ -110,10 +122,14 @@ export class GerenciarProdutosComponent implements OnInit {
           this.mensagem_erro_cadastro = e.error.mensagem; //exibindo a mensagem
           console.log(e.error);
         }
-      });
+      }).add(
+        () => this.spinnerService.hide()
+      );
   }
 
   atualizarProduto(): void {
+
+    this.spinnerService.show();
 
     //limpando as mensagens
     this.mensagem_sucesso_edicao = '';
@@ -133,10 +149,14 @@ export class GerenciarProdutosComponent implements OnInit {
         error: (e) => { //resposta de erro da API
           this.mensagem_erro_edicao = e.error.mensagem; //exibindo a mensagem
         }
-      });
+      }).add(
+        () => this.spinnerService.hide()
+      );
   }
 
   obterProduto(idProduto: string): void {
+
+    this.spinnerService.show();
 
     this.mensagem_sucesso_exclusao = '';
     this.mensagem_erro_exclusao = '';
@@ -156,12 +176,16 @@ export class GerenciarProdutosComponent implements OnInit {
         error: (e) => {
           console.log(e.error);
         }
-      });
+      }).add(
+        () => this.spinnerService.hide()
+      );
   }
 
   excluirProduto(idProduto: string): void {
 
     if (window.confirm('Deseja realmente excluir este produto?')) {
+
+      this.spinnerService.show();
 
       //limpando as mensagens
       this.mensagem_sucesso_exclusao = '';
@@ -180,7 +204,9 @@ export class GerenciarProdutosComponent implements OnInit {
           error: (e) => { //resposta de erro da API
             this.mensagem_erro_exclusao = e.error.mensagem; //exibindo a mensagem
           }
-        });
+        }).add(
+          () => this.spinnerService.hide()
+        );
     }
   }
 }

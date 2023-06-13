@@ -150,7 +150,8 @@
 
           <div class="mb-2">
             <div class="d-grid">
-              <input type="submit" value="Realizar Cadastro" class="btn btn-success" />
+              <input type="submit" value="Realizar Cadastro" class="btn btn-success"
+                [disabled]="!formCadastrarProduto.valid" />
             </div>
           </div>
 
@@ -238,7 +239,8 @@
 
           <div class="mb-2">
             <div class="d-grid">
-              <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
+              <input type="submit" value="Salvar Alterações" class="btn btn-primary"
+                [disabled]="!formAlterarProduto.valid" />
             </div>
           </div>
 

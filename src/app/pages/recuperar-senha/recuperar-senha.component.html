@@ -34,7 +34,8 @@
                     </div>
                     <div class="mb-2">
                         <div class="d-grid">
-                            <input type="submit" class="btn btn-primary" value="Recuperar Senha" />
+                            <input type="submit" class="btn btn-primary" value="Recuperar Senha"
+                                [disabled]="!formRecuperarSenha.valid" />
                         </div>
                         <div class="d-grid mt-2">
                             <a [routerLink]="['/acessar-conta']" class="btn btn-light">
